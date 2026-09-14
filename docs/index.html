@@ -103,12 +103,15 @@ header p{margin:0;max-width:62ch;color:var(--ink-2);font-size:1.02rem}
 .box[aria-pressed="true"]{border-color:#242122;box-shadow:0 0 0 3px #fff,0 0 0 5px #242122;z-index:3}
 .box.dim{opacity:.28}
 @container (max-width:520px){.box .lbl b{display:none}}
-.seatmap{display:block;width:100%;height:auto;background:#fff}
+.seatmap{display:block;width:100%;height:auto;background:#fff;touch-action:manipulation}
+.seatmap .seat .hit{fill:transparent;stroke:none}
+.seatmap .halo{fill:none;stroke:#c9a545;stroke-width:2.5}
 .seatmap text{font-family:"Libre Franklin",system-ui,sans-serif}
 .seats{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
 .seat{width:22px;height:20px;border-radius:5px 5px 3px 3px;border:2px solid var(--line-strong);background:var(--surface-2)}
 .seat.wc{width:auto;padding:0 6px;font-size:.7rem;font-weight:700;display:grid;place-items:center;border-color:var(--gold);color:var(--ink)}
-.seat-summary{font-size:.86rem;color:var(--ink-2);padding:8px 12px;border:1px solid var(--line);background:var(--surface)}
+.seat-summary{font-size:.86rem;color:var(--ink-2);padding:10px 14px;border:1px solid var(--gold);border-left-width:4px;background:var(--surface);display:grid;gap:2px}
+.seat-summary strong{color:var(--ink);font-size:1rem}
 .seatmap .seat rect{fill:#fff;stroke:#8a837c;stroke-width:1.2;cursor:pointer;transition:fill .12s}
 .seatmap .seat:hover rect{fill:#f3e8ca}
 .seatmap .seat.named rect{fill:#c9a545;stroke:#7a5d1c}
@@ -229,7 +232,7 @@ footer p{margin:0}
         <div class="tabs" role="group" aria-label="Floor">
           <button type="button" id="tab-1" aria-pressed="true" data-floor="1">1st Floor</button>
           <button type="button" id="tab-2" aria-pressed="false" data-floor="2">2nd Floor</button>
-          <button type="button" id="tab-T" aria-pressed="false" data-floor="T">Theater seating</button>
+          <button type="button" id="tab-T" aria-pressed="false" data-floor="T">Name a seat</button>
         </div>
         <div class="chips" role="group" aria-label="Filter by status">
           <button type="button" class="chip" id="f-all" data-filter="all" aria-pressed="true">All</button>
@@ -412,7 +415,7 @@ footer p{margin:0}
     SEATS.forEach(s => {
       if (s.wc) { o += `<g class="wcs"><rect x="${s.x}" y="${s.y}" width="18" height="15" rx="3"/><text x="${s.x+9}" y="${s.y+11}" text-anchor="middle">WC</text><title>Row ${s.row}, wheelchair space</title></g>`; return; }
       const sel = state.selected === s.id;
-      o += `<g class="seat${isN(s.id)?' named':''}${sel?' sel':''}${show(s)?'':' dim'}" data-seat="${s.id}" role="button" tabindex="0" aria-pressed="${sel?'true':'false'}" aria-label="Row ${s.row} seat ${s.n}, ${isN(s.id)?'named':'available'}"><rect x="${s.x}" y="${s.y}" width="18" height="15" rx="3"/><title>Row ${s.row}, Seat ${s.n}</title></g>`;
+      o += `<g class="seat${isN(s.id)?' named':''}${sel?' sel':''}${show(s)?'':' dim'}" data-seat="${s.id}" role="button" tabindex="0" aria-pressed="${sel?'true':'false'}" aria-label="Row ${s.row} seat ${s.n}, ${isN(s.id)?'named':'available'}"><rect class="hit" x="${s.x-6}" y="${s.y-2}" width="30" height="20"/>${sel?`<rect class="halo" x="${s.x-4}" y="${s.y-4}" width="26" height="23" rx="5"/>`:''}<rect x="${s.x}" y="${s.y}" width="18" height="15" rx="3"/><title>Row ${s.row}, Seat ${s.n}</title></g>`;
     });
     SPACES.filter(b => b.seats).forEach(b => {
       const bx = b.rect[0]*7.2, by = b.rect[1]*5.73, bw = b.rect[2]*7.2, bh = b.rect[3]*5.73;
@@ -430,7 +433,7 @@ footer p{margin:0}
     svg.innerHTML = o;
     const fixed = SEATS.filter(s => !s.wc), named = fixed.filter(s => isN(s.id)).length;
     const boxSeats = SPACES.filter(b => b.seats).reduce((t, b) => t + seatTotal(b), 0);
-    $('seat-summary').textContent = `${fixed.length + boxSeats} seats in the house: ${fixed.length} fixed plus ${boxSeats} in the five boxes at the rear. ${named} named. Price per seat to be set.`;
+    $('seat-summary').innerHTML = `<strong>Tap any seat to put a name on its armrest.</strong><span class="num">${fixed.length + boxSeats} seats in the house, ${fixed.length} fixed and ${boxSeats} in the five boxes at the rear. ${named} named so far. Price per seat to be set.</span>`;
   }
 
   function seatGroup(){
@@ -457,11 +460,11 @@ footer p{margin:0}
       <div class="sched">
         <div class="label">Armrest plaque preview</div>
         <div class="armrest-scene" aria-hidden="true"><div class="seatback"></div><div class="armrest"><div class="plaque"><span class="plaque-line" id="plaque-line">${esc(ins) || 'Your name here'}</span><span class="plaque-sub">Row ${seat.row} \u00b7 Seat ${seat.n}</span></div></div></div>
-        <label class="field">Inscription (demo)<input id="inscription" maxlength="40" value="${esc(ins)}" placeholder="In honor of..." autocomplete="off"></label>
+        <label class="field">Name for the plaque (demo)<input id="inscription" maxlength="40" value="${esc(ins)}" placeholder="The Peabody Family" autocomplete="off"></label>
       </div>
       <p class="note">Seat layout is drawn from the seating plan sent Sept 14, 2026 and totals the published 217 seats with the boxes. Row-by-row counts, seat pricing, and plaque wording rules come from the Advancement office and the architect.</p>
       <div class="actions">
-        <button type="button" class="btn secondary" id="toggle">${named?'Release seat (demo)':'Name this seat (demo)'}</button>
+        <button type="button" class="btn${named?' secondary':''}" id="toggle">${named?'Remove the name (demo)':'Put this name on the armrest'}</button>
         ${anyChanges()?'<button type="button" class="reset" id="reset">Reset to website data</button>':''}
       </div>`;
     $('inscription').addEventListener('input', e => { state.inscriptions[seat.id] = e.target.value; $('plaque-line').textContent = e.target.value || 'Your name here'; });
@@ -540,7 +543,7 @@ footer p{margin:0}
   }
   function syncTabs(){ [1,2,'T'].forEach(f=>$('tab-'+f).setAttribute('aria-pressed', state.floor===f?'true':'false')); }
 
-  [1,2,'T'].forEach(f=>$('tab-'+f).addEventListener('click',()=>{ state.floor=f; syncTabs(); renderPins(); }));
+  [1,2,'T'].forEach(f=>$('tab-'+f).addEventListener('click',()=>{ state.floor=f; syncTabs(); if (f==='T' && !seatById(state.selected) && !(byId(state.selected)||{}).seats) { selectSeat('B-11'); return; } renderPins(); }));
   $('seatmap').addEventListener('click', e => { const g = e.target.closest('[data-seat]'); if (g) selectSeat(g.dataset.seat); });
   $('seatmap').addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const g = e.target.closest('[data-seat]'); if (g) { e.preventDefault(); selectSeat(g.dataset.seat); } });
   document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
