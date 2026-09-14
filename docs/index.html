@@ -240,7 +240,7 @@ footer p{margin:0}
       <div class="seat-summary num" id="seat-summary" hidden></div>
       <div class="plan" id="plan">
         <img id="plan-img" src="assets/CFA_1st_Floor_FP.png" width="720" height="573" alt="First floor plan of the Center for the Arts">
-        <svg id="seatmap" class="seatmap" viewBox="0 0 720 573" hidden role="group" aria-label="Theater seat map: stage, rows A to M, wheelchair spaces, and the five boxes"></svg>
+        <svg id="seatmap" class="seatmap" viewBox="0 0 720 573" hidden role="group" aria-label="Theater seat map: stage on the right, rows A to I, wheelchair spaces, and the five boxes on the rear wall"></svg>
         <div id="pins"></div>
       </div>
       <p class="plan-note">Marker positions are approximate, placed from the plans published on bishopmoore.org. Final placement comes from the architect's drawings.</p>
@@ -309,23 +309,29 @@ footer p{margin:0}
     {n:33,id:'ta-sg', name:'Student Gallery',               zone:Z.TA,floor:2, amount:70000,  committed:false, x:41.7, y:25.0},
     {n:34,id:'ta-fr', name:'Faculty Room',                  zone:Z.TA,floor:2, amount:50000,  committed:false, x:23.0, y:31.4, approx:true},
     // Theater boxes: seat counts from the seating plan Tony Mehlich forwarded on Sept 14, 2026. No prices published yet.
-    {n:35,id:'b-l1',  name:'Lower Box 1',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[14.6,24.4,11.1,17.5]},
-    {n:36,id:'b-l2',  name:'Lower Box 2',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:2}, rect:[14.6,47.1,11.1,17.5]},
-    {n:37,id:'b-l3',  name:'Lower Box 3',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[14.6,69.8,11.1,17.5]},
-    {n:38,id:'b-u1',  name:'Upper VIP Box 1',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.1,33.2,11.1,17.5]},
-    {n:39,id:'b-u2',  name:'Upper VIP Box 2',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.1,61.1,11.1,17.5]},
+    {n:35,id:'b-l1',  name:'Lower Box 1',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[16.7,12.2,12.5,20.9]},
+    {n:36,id:'b-l2',  name:'Lower Box 2',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:2}, rect:[16.7,38.4,12.5,20.9]},
+    {n:37,id:'b-l3',  name:'Lower Box 3',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[16.7,64.6,12.5,20.9]},
+    {n:38,id:'b-u1',  name:'Upper VIP Box 1',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.8,22.7,12.5,20.9]},
+    {n:39,id:'b-u2',  name:'Upper VIP Box 2',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.8,54.1,12.5,20.9]},
   ];
   const GIVE_URL = 'https://host.nxt.blackbaud.com/donor-form/?svcid=renxt&formId=0204d9b6-3f00-4efc-b341-e31424f5a134&envid=p-yTt3EnFNM0OhKLIiO0T4tQ&zone=usa';
   const PLANS = {1:{src:'assets/CFA_1st_Floor_FP.png',alt:'First floor plan of the Center for the Arts'},2:{src:'assets/CFA_2nd_Floor_FP.png',alt:'Second floor plan of the Center for the Arts'}};
-  // Seats: 13 rows, 10 seats left of the aisle and 5 right of it, two wheelchair spaces at the aisle.
-  // Row layout is drawn from the seating plan sent Sept 14, 2026; with the 24 box seats it totals the published 217-seat capacity.
-  const ROWS = 'ABCDEFGHIJKLM'.split('');
+  // Seats: the stage is on the right of the plan, so rows run top to bottom and row A is nearest the stage.
+  // Front section rows A-C (21 seats each), a cross aisle, then rear section rows D-I (22 seats each) with two
+  // wheelchair spaces at the cross-aisle corners of row D. Drawn from the seating plan sent Sept 14, 2026;
+  // with the 24 box seats it totals the published 217-seat capacity. Row-by-row counts are illustrative.
+  const ROWS = [
+    {row:'A',x:556,count:21},{row:'B',x:526,count:21},{row:'C',x:496,count:21},
+    {row:'D',x:436,count:22},{row:'E',x:406,count:22},{row:'F',x:376,count:22},
+    {row:'G',x:346,count:22},{row:'H',x:316,count:22},{row:'I',x:286,count:22}
+  ];
   const SEATS = [];
-  ROWS.forEach((row, r) => {
-    for (let n = 1; n <= 15; n++) {
-      const side = n <= 10 ? 'main' : 'side';
-      const wc = (row === 'A' && n === 10) || (row === 'G' && n === 11);
-      SEATS.push({ id: row + '-' + n, row, n, r, side, wc, x: n <= 10 ? 230 + (n - 1) * 24 : 505 + (n - 11) * 24, y: 110 + r * 30 });
+  ROWS.forEach(R => {
+    const y0 = R.count === 22 ? 60 : 70;
+    for (let n = 1; n <= R.count; n++) {
+      const wc = R.row === 'D' && (n === 1 || n === 22);
+      SEATS.push({ id: R.row + '-' + n, row: R.row, n, side: 'ABC'.includes(R.row) ? 'front' : 'rear', wc, x: R.x, y: y0 + (n - 1) * 20 });
     }
   });
   const seatById = id => SEATS.find(s => s.id === id);
@@ -394,18 +400,19 @@ footer p{margin:0}
     const isN = id => !!state.named[id];
     const show = s => state.filter==='all' || (state.filter==='committed')===isN(s.id);
     let o = `<rect x="0" y="0" width="720" height="573" fill="#fff"/>
-      <rect x="215" y="16" width="475" height="56" fill="#4a4543"/><text x="452" y="50" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="5" fill="#fff">STAGE</text>
-      <rect x="15" y="130" width="80" height="375" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/><rect x="105" y="130" width="80" height="375" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/>
-      <text x="55" y="118" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">UPPER LEVEL</text><text x="145" y="118" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">LOWER LEVEL</text>
-      <text x="100" y="522" text-anchor="middle" font-size="10" fill="#655f5c" letter-spacing="2">BOXES</text>
-      <text x="487" y="300" text-anchor="middle" font-size="8" fill="#8a837c" letter-spacing="2" transform="rotate(-90 487 300)">AISLE</text>
-      <rect x="330" y="500" width="240" height="26" fill="none" stroke="#a89f90" stroke-dasharray="3 3"/><text x="450" y="517" text-anchor="middle" font-size="8.5" fill="#655f5c" letter-spacing="2">SOUND / LIGHTING BOOTH</text>`;
-    ROWS.forEach((row, r) => { const y = 110 + r*30 + 12; o += `<text x="222" y="${y}" text-anchor="end" font-size="8" fill="#8a837c">${row}</text><text x="632" y="${y}" font-size="8" fill="#8a837c">${row}</text>`; });
-    [1,5,10,11,15].forEach(n => { const x = (n <= 10 ? 230 + (n-1)*24 : 505 + (n-11)*24) + 9; o += `<text x="${x}" y="102" text-anchor="middle" font-size="7" fill="#a89f90">${n}</text>`; });
+      <rect x="600" y="40" width="100" height="500" fill="#4a4543"/><text x="650" y="290" transform="rotate(-90 650 290)" text-anchor="middle" font-size="15" font-weight="700" letter-spacing="6" fill="#fff">STAGE</text>
+      <rect x="20" y="60" width="90" height="440" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/><rect x="120" y="60" width="90" height="440" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/>
+      <text x="65" y="50" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">UPPER LEVEL</text><text x="165" y="50" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">LOWER LEVEL</text>
+      <text x="115" y="520" text-anchor="middle" font-size="10" fill="#655f5c" letter-spacing="2">BOXES, REAR WALL</text>
+      <rect x="28" y="262" width="74" height="34" fill="none" stroke="#a89f90" stroke-dasharray="3 3"/><text x="65" y="283" text-anchor="middle" font-size="8" fill="#655f5c" letter-spacing="1.5">BOOTH</text>
+      <text x="478" y="290" transform="rotate(-90 478 290)" text-anchor="middle" font-size="8" fill="#8a837c" letter-spacing="2">CROSS AISLE</text>
+      <text x="420" y="30" text-anchor="middle" font-size="8" fill="#8a837c" letter-spacing="2">HOUSE LEFT</text><text x="420" y="545" text-anchor="middle" font-size="8" fill="#8a837c" letter-spacing="2">HOUSE RIGHT</text>`;
+    ROWS.forEach(R => { o += `<text x="${R.x+9}" y="52" text-anchor="middle" font-size="8" fill="#8a837c">${R.row}</text><text x="${R.x+9}" y="517" text-anchor="middle" font-size="8" fill="#8a837c">${R.row}</text>`; });
+    [1,5,10,15,22].forEach(n => { o += `<text x="278" y="${60+(n-1)*20+11}" text-anchor="end" font-size="7" fill="#a89f90">${n}</text>`; });
     SEATS.forEach(s => {
-      if (s.wc) { o += `<g class="wcs"><rect x="${s.x}" y="${s.y}" width="18" height="16" rx="3"/><text x="${s.x+9}" y="${s.y+11}" text-anchor="middle">WC</text><title>Row ${s.row}, wheelchair space</title></g>`; return; }
+      if (s.wc) { o += `<g class="wcs"><rect x="${s.x}" y="${s.y}" width="18" height="15" rx="3"/><text x="${s.x+9}" y="${s.y+11}" text-anchor="middle">WC</text><title>Row ${s.row}, wheelchair space</title></g>`; return; }
       const sel = state.selected === s.id;
-      o += `<g class="seat${isN(s.id)?' named':''}${sel?' sel':''}${show(s)?'':' dim'}" data-seat="${s.id}" role="button" tabindex="0" aria-pressed="${sel?'true':'false'}" aria-label="Row ${s.row} seat ${s.n}, ${isN(s.id)?'named':'available'}"><rect x="${s.x}" y="${s.y}" width="18" height="16" rx="3"/><title>Row ${s.row}, Seat ${s.n}</title></g>`;
+      o += `<g class="seat${isN(s.id)?' named':''}${sel?' sel':''}${show(s)?'':' dim'}" data-seat="${s.id}" role="button" tabindex="0" aria-pressed="${sel?'true':'false'}" aria-label="Row ${s.row} seat ${s.n}, ${isN(s.id)?'named':'available'}"><rect x="${s.x}" y="${s.y}" width="18" height="15" rx="3"/><title>Row ${s.row}, Seat ${s.n}</title></g>`;
     });
     SPACES.filter(b => b.seats).forEach(b => {
       const bx = b.rect[0]*7.2, by = b.rect[1]*5.73, bw = b.rect[2]*7.2, bh = b.rect[3]*5.73;
@@ -416,21 +423,21 @@ footer p{margin:0}
         else o += `<g class="wcs"><rect x="${cx}" y="${cy}" width="16" height="12" rx="3"/><text x="${cx+8}" y="${cy+9}" text-anchor="middle">WC</text></g>`;
       }
     });
-    o += `<rect x="230" y="547" width="14" height="12" rx="3" fill="#fff" stroke="#8a837c"/><text x="249" y="557" font-size="8" fill="#655f5c">Available</text>
-      <rect x="300" y="547" width="14" height="12" rx="3" fill="#c9a545" stroke="#7a5d1c"/><text x="319" y="557" font-size="8" fill="#655f5c">Named</text>
-      <rect x="360" y="547" width="14" height="12" rx="3" fill="#fff" stroke="#9d7b2b" stroke-dasharray="2 2"/><text x="379" y="557" font-size="8" fill="#655f5c">Wheelchair space</text>
-      <text x="690" y="557" text-anchor="end" font-size="7.5" fill="#8a837c">Layout drawn from the Sept 14, 2026 seating plan</text>`;
+    o += `<rect x="286" y="552" width="14" height="12" rx="3" fill="#fff" stroke="#8a837c"/><text x="305" y="562" font-size="8" fill="#655f5c">Available</text>
+      <rect x="356" y="552" width="14" height="12" rx="3" fill="#c9a545" stroke="#7a5d1c"/><text x="375" y="562" font-size="8" fill="#655f5c">Named</text>
+      <rect x="416" y="552" width="14" height="12" rx="3" fill="#fff" stroke="#9d7b2b" stroke-dasharray="2 2"/><text x="435" y="562" font-size="8" fill="#655f5c">Wheelchair space</text>
+      <text x="700" y="562" text-anchor="end" font-size="7.5" fill="#8a837c">Layout drawn from the Sept 14, 2026 seating plan</text>`;
     svg.innerHTML = o;
     const fixed = SEATS.filter(s => !s.wc), named = fixed.filter(s => isN(s.id)).length;
     const boxSeats = SPACES.filter(b => b.seats).reduce((t, b) => t + seatTotal(b), 0);
-    $('seat-summary').textContent = `${fixed.length + boxSeats} seats in the house: ${fixed.length} fixed plus ${boxSeats} in the five boxes. ${named} named. Price per seat to be set.`;
+    $('seat-summary').textContent = `${fixed.length + boxSeats} seats in the house: ${fixed.length} fixed plus ${boxSeats} in the five boxes at the rear. ${named} named. Price per seat to be set.`;
   }
 
   function seatGroup(){
     const g = document.createElement('div'); g.className = 'group';
     const fixed = SEATS.filter(s => !s.wc); const named = fixed.filter(s => state.named[s.id]).length;
     g.innerHTML = `<h3>Theater seats <span class="num">${named} of ${fixed.length} named</span></h3>`;
-    [['main','L','Left of the aisle','Rows A to M, seats 1 to 10'],['side','R','Right of the aisle','Rows A to M, seats 11 to 15']].forEach(([side, tag, name, sub]) => {
+    [['front','F','Front section','Rows A to C, nearest the stage, 21 seats each'],['rear','R','Rear section','Rows D to I behind the cross aisle, 22 seats each']].forEach(([side, tag, name, sub]) => {
       const secs = fixed.filter(s => s.side === side); const nn = secs.filter(s => state.named[s.id]).length;
       const r = document.createElement('button'); r.type = 'button'; r.className = 'row';
       r.innerHTML = `<span class="n num">${tag}</span><span class="name">${name}<small>${sub}</small></span><span class="amt num">${secs.length} seats<small>${nn} named</small></span>`;
@@ -443,7 +450,7 @@ footer p{margin:0}
   function renderSeatDetail(seat){
     const d = $('detail'); const named = !!state.named[seat.id]; const ins = state.inscriptions[seat.id] || '';
     d.innerHTML = `
-      <div class="zone-label">Theater seats \u00b7 ${seat.side==='main'?'Left of the aisle':'Right of the aisle'} \u00b7 Row ${seat.row}</div>
+      <div class="zone-label">Theater seats \u00b7 ${seat.side==='front'?'Front section':'Rear section'} \u00b7 Row ${seat.row}</div>
       <h2>Row ${seat.row}, Seat ${seat.n}</h2>
       <div class="amount num">Price to be set</div>
       <div><span class="status${named?' c':''}"><i class="dot"></i>${named?'Named':'Available'}</span></div>
