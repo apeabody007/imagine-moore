@@ -1,0 +1,440 @@
+<title>Imagine Moore Naming Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Libre+Franklin:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#fffaf0; --surface:#f8f5ef; --surface-2:#f1eadb; --line:#e3dbc9; --line-strong:#c9bea3;
+  --ink:#242122; --ink-2:#655f5c; --ink-3:#8a837c;
+  --gold:#9d7b2b; --gold-2:#c9a545; --gold-soft:#f3e8ca;
+  --avail:#ffffff; --avail-ring:#7a736b;
+  --focus:#1f5fbf; --shadow:0 10px 30px rgba(36,33,34,.10);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1919; --surface:#242122; --surface-2:#2d2927; --line:#3a3634; --line-strong:#5a534c;
+    --ink:#f3e8ca; --ink-2:#c2b8a6; --ink-3:#948b7d;
+    --gold:#ddb75f; --gold-2:#c9a545; --gold-soft:#3b3220;
+    --avail:#2d2927; --avail-ring:#c2b8a6;
+    --focus:#8fb4ff; --shadow:0 10px 30px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1919; --surface:#242122; --surface-2:#2d2927; --line:#3a3634; --line-strong:#5a534c;
+  --ink:#f3e8ca; --ink-2:#c2b8a6; --ink-3:#948b7d;
+  --gold:#ddb75f; --gold-2:#c9a545; --gold-soft:#3b3220;
+  --avail:#2d2927; --avail-ring:#c2b8a6;
+  --focus:#8fb4ff; --shadow:0 10px 30px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Libre Franklin",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;padding-inline:clamp(16px,4vw,44px);padding-block:28px 56px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;display:grid;gap:30px}
+button{font:inherit;color:inherit}
+a{color:var(--gold);text-decoration-thickness:1px;text-underline-offset:3px}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.serif{font-family:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif}
+.num{font-variant-numeric:tabular-nums}
+
+/* header */
+header{display:grid;gap:10px;border-bottom:1px solid var(--line);padding-bottom:22px}
+header h1{margin:0;font-family:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;font-weight:600;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.02;text-wrap:balance;letter-spacing:-.005em}
+header p{margin:0;max-width:62ch;color:var(--ink-2);font-size:1.02rem}
+.demo-tag{justify-self:start;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);padding:4px 9px;border-radius:2px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surface);padding:18px 20px 16px;display:grid;gap:2px;min-width:0}
+.stat .label{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.stat .value{font-family:"Bodoni Moda","Didot",Georgia,serif;font-weight:600;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.1;letter-spacing:-.01em}
+.stat .sub{color:var(--ink-2);font-size:.86rem}
+.stat.committed .value{color:var(--gold)}
+.bar-wrap{display:grid;gap:8px}
+.bar{display:flex;gap:2px;height:14px;border-radius:2px;overflow:hidden;background:var(--line)}
+.bar .seg{height:100%;transition:width .35s ease}
+.bar .seg.c{background:var(--gold)}
+.bar .seg.a{background:repeating-linear-gradient(135deg,var(--line-strong) 0 3px,var(--surface-2) 3px 8px)}
+.bar-legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.84rem;color:var(--ink-2)}
+.bar-legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:12px;height:12px;border-radius:2px;display:inline-block}
+.sw.c{background:var(--gold)}
+.sw.a{background:repeating-linear-gradient(135deg,var(--line-strong) 0 3px,var(--surface-2) 3px 8px);border:1px solid var(--line-strong)}
+.footnote{font-size:.8rem;color:var(--ink-3);max-width:70ch;margin:0}
+
+/* main grid */
+.main{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr);gap:26px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:1fr}}
+
+/* plan */
+.plan-card{display:grid;gap:12px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.tabs{display:inline-flex;border:1px solid var(--line-strong);border-radius:3px;overflow:hidden}
+.tabs button{background:var(--surface);border:0;padding:8px 14px;font-weight:600;font-size:.86rem;cursor:pointer;color:var(--ink-2)}
+.tabs button+button{border-left:1px solid var(--line-strong)}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.chips{display:inline-flex;gap:6px;flex-wrap:wrap}
+.chip{background:transparent;border:1px solid var(--line-strong);border-radius:999px;padding:6px 12px;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+.plan{position:relative;container-type:inline-size;background:#fff;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.plan img{display:block;width:100%;height:auto;max-width:100%}
+.pin{position:absolute;transform:translate(-50%,-50%);width:clamp(18px,3.6cqw,27px);height:clamp(18px,3.6cqw,27px);border-radius:50%;border:2px solid #7a736b;background:#fff;color:#242122;font-size:clamp(.58rem,1.6cqw,.74rem);font-weight:700;display:grid;place-items:center;cursor:pointer;padding:0;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.25);transition:transform .15s ease,opacity .2s ease}
+.pin.c{background:#c9a545;border-color:#7a5d1c;color:#242122}
+.pin:hover{transform:translate(-50%,-50%) scale(1.15)}
+.pin[aria-pressed="true"]{transform:translate(-50%,-50%) scale(1.28);border-color:#242122;box-shadow:0 0 0 3px #fff,0 0 0 5px #242122;z-index:3}
+.pin.dim{opacity:.28}
+.zone{position:absolute;border:2px dashed #7a5d1c;background:rgba(201,165,69,.10);border-radius:4px;cursor:pointer;padding:0;transition:background .2s}
+.zone:hover{background:rgba(201,165,69,.22)}
+.zone[aria-pressed="true"]{background:rgba(201,165,69,.28);border-style:solid;border-color:#242122}
+.zone.dim{opacity:.28}
+.zone .tag{position:absolute;left:0;bottom:0;transform:translate(-2px,100%);background:#242122;color:#fff;font-size:clamp(.58rem,1.6cqw,.72rem);font-weight:700;padding:2px 7px;border-radius:0 0 2px 2px;white-space:nowrap}
+.box{position:absolute;border:2px solid #7a5d1c;background:rgba(255,255,255,.94);border-radius:6px;cursor:pointer;padding:3px 4px;display:grid;align-content:center;justify-items:center;gap:2px;text-align:center;color:#242122;font-size:clamp(.5rem,1.5cqw,.7rem);line-height:1.15;transition:transform .15s ease,opacity .2s ease}
+.box b{display:block;font-size:clamp(.55rem,1.7cqw,.78rem);text-wrap:balance}
+.box .n{width:18px;height:18px;border-radius:50%;border:2px solid #7a736b;display:grid;place-items:center;font-size:.6rem;font-weight:700;background:#fff}
+.box.c{background:#c9a545}
+.box:hover{transform:scale(1.04)}
+.box[aria-pressed="true"]{border-color:#242122;box-shadow:0 0 0 3px #fff,0 0 0 5px #242122;z-index:3}
+.box.dim{opacity:.28}
+@container (max-width:520px){.box span,.box b{display:none}}
+.seatmap{display:block;width:100%;height:auto;background:#fff}
+.seatmap text{font-family:"Libre Franklin",system-ui,sans-serif}
+.seats{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.seat{width:22px;height:20px;border-radius:5px 5px 3px 3px;border:2px solid var(--line-strong);background:var(--surface-2)}
+.seat.wc{width:auto;padding:0 6px;font-size:.7rem;font-weight:700;display:grid;place-items:center;border-color:var(--gold);color:var(--ink)}
+.plan-note{font-size:.8rem;color:var(--ink-3);margin:0}
+.pin:focus-visible,.zone:focus-visible,.box:focus-visible,.chip:focus-visible,.tabs button:focus-visible,.row:focus-visible,.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* side panel */
+.side{display:grid;gap:18px;position:sticky;top:16px}
+@media (max-width:900px){.side{position:static}}
+.detail{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--gold);padding:20px 20px 18px;display:grid;gap:14px;box-shadow:var(--shadow)}
+.detail .zone-label{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.detail h2{margin:0;font-family:"Bodoni Moda","Didot",Georgia,serif;font-weight:600;font-size:1.75rem;line-height:1.1;text-wrap:balance}
+.detail .amount{font-family:"Bodoni Moda","Didot",Georgia,serif;font-weight:600;font-size:2.1rem;line-height:1;letter-spacing:-.01em}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line-strong);color:var(--ink-2)}
+.status.c{background:var(--gold-soft);border-color:var(--gold);color:var(--ink)}
+.status .dot{width:8px;height:8px;border-radius:50%;background:var(--avail-ring)}
+.status.c .dot{background:var(--gold)}
+.sched{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:12px}
+.sched .label{font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.sched table{width:100%;border-collapse:collapse;font-size:.9rem}
+.sched td{padding:5px 0;border-bottom:1px solid var(--line)}
+.sched td:last-child{text-align:right;font-weight:600}
+.sched tr:last-child td{border-bottom:0}
+.detail .note{font-size:.84rem;color:var(--ink-2);margin:0}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:3px;font-weight:600;font-size:.88rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line-strong)}
+.reset{font-size:.82rem;color:var(--ink-2);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+.list{display:grid;gap:0;border:1px solid var(--line);background:var(--surface)}
+.group{display:grid}
+.group h3{margin:0;padding:10px 14px 6px;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);background:var(--surface-2);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}
+.group h3 span{font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink-3)}
+.row{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--line);padding:9px 14px;cursor:pointer}
+.row:hover{background:var(--surface-2)}
+.row[aria-pressed="true"]{background:var(--gold-soft)}
+.row.hidden{display:none}
+.row .n{width:22px;height:22px;border-radius:50%;border:2px solid var(--avail-ring);display:grid;place-items:center;font-size:.66rem;font-weight:700;background:var(--avail)}
+.row .n.c{background:var(--gold-2);border-color:var(--gold);color:#242122}
+.row .name{display:grid;line-height:1.25}
+.row .name small{color:var(--ink-3);font-size:.76rem}
+.row .amt{font-weight:600;font-size:.9rem;text-align:right;display:grid;line-height:1.2}
+.row .amt small{color:var(--ink-3);font-weight:500;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase}
+.row .amt.c small{color:var(--gold)}
+.list-empty{padding:16px 14px;color:var(--ink-3);font-size:.9rem;border-top:1px solid var(--line)}
+
+/* renderings */
+.renders{display:grid;gap:12px}
+.renders h2{margin:0;font-family:"Bodoni Moda","Didot",Georgia,serif;font-weight:600;font-size:1.5rem}
+.render-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.render-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.render-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+figure{margin:0;display:grid;gap:6px}
+figure img{width:100%;height:auto;aspect-ratio:325/157;object-fit:cover;border:1px solid var(--line);background:var(--surface-2)}
+figcaption{font-size:.8rem;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--line);padding-top:16px;font-size:.8rem;color:var(--ink-3);display:grid;gap:4px;max-width:80ch}
+footer p{margin:0}
+@media (prefers-reduced-motion: reduce){*{transition:none !important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="demo-tag">Demo &middot; not an official Bishop Moore page</span>
+    <div class="eyebrow">Bishop Moore Catholic &middot; Imagine Moore &middot; Center for the Arts</div>
+    <h1>Put a name on it.</h1>
+    <p>Every namable space in the new Center for the Arts, on the architect's plan, plus the five theater boxes. Tap a space to see the gift that names it and what that looks like over a five-year pledge.</p>
+  </header>
+
+  <section class="stats" aria-label="Campaign naming totals">
+    <div class="stat committed">
+      <div class="label">Committed</div>
+      <div class="value num" id="st-c-val">$0</div>
+      <div class="sub num" id="st-c-sub"></div>
+    </div>
+    <div class="stat">
+      <div class="label">Still available</div>
+      <div class="value num" id="st-a-val">$0</div>
+      <div class="sub num" id="st-a-sub"></div>
+    </div>
+    <div class="stat">
+      <div class="label">All naming opportunities</div>
+      <div class="value num" id="st-t-val">$0</div>
+      <div class="sub num" id="st-t-sub"></div>
+    </div>
+  </section>
+  <div class="bar-wrap">
+    <div class="bar" role="img" id="bar" aria-label="Share of naming opportunities committed">
+      <div class="seg c" id="seg-c" style="width:0%"></div>
+      <div class="seg a" id="seg-a" style="width:100%"></div>
+    </div>
+    <div class="bar-legend"><span><i class="sw c"></i> Committed</span><span><i class="sw a"></i> Available</span></div>
+    <p class="footnote num">Totals are computed from the rows on the campaign page as of Sept 13, 2026. The typed total on the current site reads $5,295,000; the rows add to $5,445,000. Stage and Audience Area are alternatives to naming the complete theater, so they are not double-counted. The five theater boxes have no published price yet and are left out of these totals.</p>
+  </div>
+
+  <div class="main">
+    <div class="plan-card">
+      <div class="toolbar">
+        <div class="tabs" role="group" aria-label="Floor">
+          <button type="button" id="tab-1" aria-pressed="true" data-floor="1">1st Floor</button>
+          <button type="button" id="tab-2" aria-pressed="false" data-floor="2">2nd Floor</button>
+          <button type="button" id="tab-T" aria-pressed="false" data-floor="T">Theater seating</button>
+        </div>
+        <div class="chips" role="group" aria-label="Filter by status">
+          <button type="button" class="chip" id="f-all" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" id="f-avail" data-filter="available" aria-pressed="false">Available</button>
+          <button type="button" class="chip" id="f-comm" data-filter="committed" aria-pressed="false">Committed</button>
+        </div>
+      </div>
+      <div class="plan" id="plan">
+        <img id="plan-img" src="assets/CFA_1st_Floor_FP.png" width="720" height="573" alt="First floor plan of the Center for the Arts">
+        <svg id="seatmap" class="seatmap" viewBox="0 0 720 573" hidden role="img" aria-label="Schematic of the theater seating showing the stage, fixed seating, and the five box locations">
+          <defs><pattern id="seat" width="16" height="17" patternUnits="userSpaceOnUse"><rect x="2" y="3" width="12" height="11" rx="3" fill="#e6e0d3" stroke="#a89f90" stroke-width="1"/></pattern></defs>
+          <rect x="0" y="0" width="720" height="573" fill="#fff"/>
+          <rect x="215" y="25" width="475" height="70" fill="#4a4543"/>
+          <text x="452" y="66" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="5" fill="#fff">STAGE</text>
+          <rect x="215" y="130" width="275" height="375" fill="url(#seat)" stroke="#a89f90"/>
+          <rect x="515" y="130" width="175" height="375" fill="url(#seat)" stroke="#a89f90"/>
+          <text x="502" y="318" text-anchor="middle" font-size="9" fill="#8a837c" letter-spacing="2" transform="rotate(-90 502 318)">AISLE</text>
+          <text x="352" y="528" text-anchor="middle" font-size="10" fill="#655f5c" letter-spacing="2">FIXED SEATING</text>
+          <text x="602" y="528" text-anchor="middle" font-size="10" fill="#655f5c" letter-spacing="2">FIXED SEATING</text>
+          <rect x="15" y="130" width="80" height="375" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/>
+          <rect x="105" y="130" width="80" height="375" fill="none" stroke="#c9bea3" stroke-dasharray="4 4"/>
+          <text x="55" y="118" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">UPPER LEVEL</text>
+          <text x="145" y="118" text-anchor="middle" font-size="9" fill="#655f5c" letter-spacing="1.5">LOWER LEVEL</text>
+          <text x="100" y="528" text-anchor="middle" font-size="10" fill="#655f5c" letter-spacing="2">BOXES</text>
+          <text x="360" y="560" text-anchor="middle" font-size="9" fill="#8a837c">SCHEMATIC, NOT TO SCALE. BOX SEAT COUNTS FROM THE SEATING PLAN SENT SEPT 14, 2026. PLACEMENT TO BE CONFIRMED WITH THE ARCHITECT.</text>
+        </svg>
+        <div id="pins"></div>
+      </div>
+      <p class="plan-note">Marker positions are approximate, placed from the plans published on bishopmoore.org. Final placement comes from the architect's drawings.</p>
+    </div>
+
+    <aside class="side">
+      <div class="detail" id="detail" aria-live="polite"></div>
+      <div class="list" id="list" aria-label="All naming opportunities"></div>
+    </aside>
+  </div>
+
+  <section class="renders">
+    <h2>The spaces, as rendered</h2>
+    <div class="render-row">
+      <figure><img src="assets/CFA_Auditorium_Render.png" alt="Rendering of the auditorium" loading="lazy"><figcaption>Theater &middot; 217 seats</figcaption></figure>
+      <figure><img src="assets/CFA_Lobby_Render.png" alt="Rendering of the lobby and gallery" loading="lazy"><figcaption>Main Lobby and student gallery</figcaption></figure>
+      <figure><img src="assets/CFA_Choir_Render.png" alt="Rendering of the choir studio" loading="lazy"><figcaption>Vocal/Choral Studio</figcaption></figure>
+      <figure><img src="assets/CFA_Dance_Render.png" alt="Rendering of the dance studio" loading="lazy"><figcaption>Dance Studio</figcaption></figure>
+      <figure><img src="assets/CFA_Orchestra_Render.png" alt="Rendering of the orchestra studio" loading="lazy"><figcaption>Strings/Orchestral Studio</figcaption></figure>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built by Aaron Peabody, BMC '14, from public information on bishopmoore.org. Prices and committed status are as published on the Center for the Arts page on Sept 13, 2026. Renderings and floor plans belong to Bishop Moore Catholic and its architect.</p>
+    <p>"Mark committed" changes only this screen. Nothing here is saved. The real version would read from the Advancement office's records.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const Z = { S:'Classrooms & Studios', W:'Welcome Center', A:'Administration', T:'Theater', TA:'Theater Areas', B:'Theater Boxes' };
+  // Order and prices follow the naming table on bishopmoore.org/center-for-the-arts.cfm (Sept 13, 2026).
+  const SPACES = [
+    {n:1, id:'s-3d',  name:'3D Draw/Pottery Studio',        zone:Z.S, floor:2, amount:250000, committed:true,  x:77.8, y:11.3},
+    {n:2, id:'s-2d',  name:'2D Draw Studio',                zone:Z.S, floor:2, amount:250000, committed:true,  x:32.6, y:10.5},
+    {n:3, id:'s-ph',  name:'Photography Studio',            zone:Z.S, floor:2, amount:250000, committed:false, x:18.0, y:10.5},
+    {n:4, id:'s-dm',  name:'Digital Media Studio',          zone:Z.S, floor:2, amount:250000, committed:false, x:48.6, y:10.5, approx:true},
+    {n:5, id:'s-vo',  name:'Vocal/Choral Studio',           zone:Z.S, floor:1, amount:250000, committed:false, x:87.5, y:86.4},
+    {n:6, id:'s-da',  name:'Dance Studio',                  zone:Z.S, floor:1, amount:250000, committed:false, x:87.5, y:61.0},
+    {n:7, id:'s-st',  name:'Strings/Orchestral Studio',     zone:Z.S, floor:1, amount:250000, committed:false, x:87.5, y:37.5},
+    {n:8, id:'s-dr',  name:'Performing Arts/Drama Studio',  zone:Z.S, floor:1, amount:250000, committed:false, x:62.0, y:50.6},
+    {n:9, id:'s-d1',  name:'Dressing Room 1',               zone:Z.S, floor:1, amount:100000, committed:false, x:65.5, y:32.0},
+    {n:10,id:'s-d2',  name:'Dressing Room 2',               zone:Z.S, floor:1, amount:100000, committed:false, x:65.5, y:70.7},
+    {n:11,id:'w-al',  name:'Administration Lobby',          zone:Z.W, floor:1, amount:100000, committed:true,  x:13.9, y:7.3},
+    {n:12,id:'w-ae',  name:'Administration Entry',          zone:Z.W, floor:1, amount:35000,  committed:true,  x:13.0, y:21.0},
+    {n:13,id:'w-wc',  name:'Admissions Welcome Center',     zone:Z.W, floor:1, amount:90000,  committed:true,  x:23.6, y:7.3},
+    {n:14,id:'w-o1',  name:'Admissions Office 1',           zone:Z.W, floor:1, amount:35000,  committed:false, x:32.0, y:7.3, approx:true},
+    {n:15,id:'w-o2',  name:'Admissions Office 2',           zone:Z.W, floor:1, amount:35000,  committed:false, x:37.2, y:7.3, approx:true},
+    {n:16,id:'w-re',  name:'Reception',                     zone:Z.W, floor:1, amount:35000,  committed:true,  x:19.0, y:22.0},
+    {n:17,id:'a-pr',  name:"Principal's Office",            zone:Z.A, floor:1, amount:90000,  committed:false, x:57.6, y:7.0},
+    {n:18,id:'a-e1',  name:'Executive Assistant Office 1',  zone:Z.A, floor:1, amount:35000,  committed:false, x:67.0, y:7.0, approx:true},
+    {n:19,id:'a-hr',  name:'Human Resources Office',        zone:Z.A, floor:1, amount:35000,  committed:false, x:42.4, y:7.3, approx:true},
+    {n:20,id:'a-fi',  name:'File Room',                     zone:Z.A, floor:1, amount:15000,  committed:true,  x:46.5, y:22.0},
+    {n:21,id:'a-r1',  name:'Registrar Office 1',            zone:Z.A, floor:1, amount:35000,  committed:false, x:24.3, y:22.0, approx:true},
+    {n:22,id:'a-r2',  name:'Registrar Office 2',            zone:Z.A, floor:1, amount:35000,  committed:false, x:29.5, y:22.0, approx:true},
+    {n:23,id:'a-pe',  name:"President's Office",            zone:Z.A, floor:1, amount:100000, committed:false, x:79.0, y:7.0},
+    {n:24,id:'a-e2',  name:'Executive Assistant Office 2',  zone:Z.A, floor:1, amount:35000,  committed:false, x:43.0, y:22.0, approx:true},
+    {n:25,id:'a-ml',  name:'Meeting Lounge',                zone:Z.A, floor:1, amount:100000, committed:true,  x:79.0, y:17.0},
+    {n:26,id:'t-all', name:'Theater (complete)',            zone:Z.T, floor:1, amount:2000000,committed:false, rect:[17,27,39,47]},
+    {n:27,id:'t-st',  name:'Stage',                         zone:Z.T, floor:1, amount:1000000,committed:false, x:48.0, y:50.6, alt:true},
+    {n:28,id:'t-au',  name:'Audience Area',                 zone:Z.T, floor:1, amount:1000000,committed:false, x:28.5, y:50.6, alt:true},
+    {n:29,id:'ta-ml', name:'Main Lobby',                    zone:Z.TA,floor:1, amount:200000, committed:true,  x:4.9,  y:52.0},
+    {n:30,id:'ta-2l', name:'Second Floor Lobby',            zone:Z.TA,floor:2, amount:15000,  committed:true,  x:4.9,  y:67.0},
+    {n:31,id:'ta-bo', name:'Lighting/Sound Booth',          zone:Z.TA,floor:2, amount:50000,  committed:true,  x:15.7, y:51.5},
+    {n:32,id:'ta-rl', name:'Reception Lobby',               zone:Z.TA,floor:1, amount:50000,  committed:false, x:66.7, y:76.0, approx:true},
+    {n:33,id:'ta-sg', name:'Student Gallery',               zone:Z.TA,floor:2, amount:70000,  committed:false, x:41.7, y:25.0},
+    {n:34,id:'ta-fr', name:'Faculty Room',                  zone:Z.TA,floor:2, amount:50000,  committed:false, x:23.0, y:31.4, approx:true},
+    // Theater boxes: seat counts from the seating plan Tony Mehlich forwarded on Sept 14, 2026. No prices published yet.
+    {n:35,id:'b-l1',  name:'Lower Box 1',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[14.6,24.4,11.1,17.5]},
+    {n:36,id:'b-l2',  name:'Lower Box 2',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:2}, rect:[14.6,47.1,11.1,17.5]},
+    {n:37,id:'b-l3',  name:'Lower Box 3',                   zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:4,wc:1}, rect:[14.6,69.8,11.1,17.5]},
+    {n:38,id:'b-u1',  name:'Upper VIP Box 1',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.1,33.2,11.1,17.5]},
+    {n:39,id:'b-u2',  name:'Upper VIP Box 2',               zone:Z.B, floor:'T', amount:null, committed:false, seats:{reg:3,wc:1}, rect:[2.1,61.1,11.1,17.5]},
+  ];
+  const GIVE_URL = 'https://host.nxt.blackbaud.com/donor-form/?svcid=renxt&formId=0204d9b6-3f00-4efc-b341-e31424f5a134&envid=p-yTt3EnFNM0OhKLIiO0T4tQ&zone=usa';
+  const PLANS = {1:{src:'assets/CFA_1st_Floor_FP.png',alt:'First floor plan of the Center for the Arts'},2:{src:'assets/CFA_2nd_Floor_FP.png',alt:'Second floor plan of the Center for the Arts'}};
+
+  const original = Object.fromEntries(SPACES.map(s=>[s.id,s.committed]));
+  const state = { floor:1, filter:'all', selected:'t-st', committed:{...original} };
+  const money = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const $ = id => document.getElementById(id);
+  const isC = s => state.committed[s.id];
+  const passes = s => state.filter==='all' || (state.filter==='committed') === isC(s);
+  const byId = id => SPACES.find(s=>s.id===id);
+  const floorName = s => s.floor===1?'1st floor':s.floor===2?'2nd floor':'Theater';
+  const seatTotal = s => s.seats.reg + s.seats.wc;
+  const seatText = s => `${s.seats.reg} seat${s.seats.reg===1?'':'s'} + ${s.seats.wc} wheelchair space${s.seats.wc===1?'':'s'}`;
+
+  function renderStats(){
+    const counted = SPACES.filter(s=>!s.alt && s.amount!=null);
+    const c = counted.filter(isC), a = counted.filter(s=>!isC(s));
+    const sum = arr => arr.reduce((t,s)=>t+s.amount,0);
+    const cs = sum(c), as = sum(a), ts = cs+as;
+    $('st-c-val').textContent = money.format(cs);
+    $('st-c-sub').textContent = `${c.length} of ${counted.length} spaces`;
+    $('st-a-val').textContent = money.format(as);
+    $('st-a-sub').textContent = `${a.length} spaces, including the theater`;
+    $('st-t-val').textContent = money.format(ts);
+    $('st-t-sub').textContent = `${counted.length} spaces across two floors`;
+    const pct = ts ? (cs/ts*100) : 0;
+    $('seg-c').style.width = pct.toFixed(1)+'%';
+    $('seg-a').style.width = (100-pct).toFixed(1)+'%';
+    $('bar').setAttribute('aria-label', `${pct.toFixed(0)} percent of naming opportunities committed`);
+  }
+
+  function renderPins(){
+    const wrap = $('pins'); wrap.innerHTML='';
+    const img = $('plan-img'), svg = $('seatmap');
+    if(state.floor==='T'){ img.setAttribute('hidden',''); svg.removeAttribute('hidden'); }
+    else { svg.setAttribute('hidden',''); img.removeAttribute('hidden'); img.src = PLANS[state.floor].src; img.alt = PLANS[state.floor].alt; }
+    SPACES.filter(s=>s.floor===state.floor).forEach(s=>{
+      const b = document.createElement('button'); b.type='button';
+      const sel = s.id===state.selected;
+      b.setAttribute('aria-pressed', sel?'true':'false');
+      const priceText = s.amount==null ? 'price to be set' : money.format(s.amount);
+      b.setAttribute('aria-label', `${s.name}, ${s.seats?seatTotal(s)+' seats, ':''}${priceText}, ${isC(s)?'committed':'available'}`);
+      b.title = `${s.name} \u00b7 ${priceText}`;
+      if(s.seats){
+        b.className='box'+(isC(s)?' c':'')+(passes(s)?'':' dim');
+        b.style.left=s.rect[0]+'%'; b.style.top=s.rect[1]+'%'; b.style.width=s.rect[2]+'%'; b.style.height=s.rect[3]+'%';
+        b.innerHTML=`<span class="n num">${s.n}</span><b>${s.name}</b><span class="num">${seatTotal(s)} seats</span>`;
+      } else if(s.rect){
+        b.className='zone'+(passes(s)?'':' dim');
+        b.style.left=s.rect[0]+'%'; b.style.top=s.rect[1]+'%'; b.style.width=s.rect[2]+'%'; b.style.height=s.rect[3]+'%';
+        b.innerHTML=`<span class="tag">${s.n} \u00b7 Theater</span>`;
+      } else {
+        b.className='pin'+(isC(s)?' c':'')+(passes(s)?'':' dim');
+        b.style.left=s.x+'%'; b.style.top=s.y+'%';
+        b.textContent=s.n;
+      }
+      b.addEventListener('click',()=>select(s.id));
+      wrap.appendChild(b);
+    });
+  }
+
+  function renderList(){
+    const list = $('list'); list.innerHTML='';
+    Object.values(Z).forEach(zone=>{
+      const items = SPACES.filter(s=>s.zone===zone);
+      const shown = items.filter(passes);
+      if(!shown.length) return;
+      const g = document.createElement('div'); g.className='group';
+      const counted = items.filter(s=>!s.alt);
+      const cc = counted.filter(isC).length;
+      g.innerHTML = `<h3>${zone} <span class="num">${cc} of ${counted.length} committed</span></h3>`;
+      shown.forEach(s=>{
+        const r = document.createElement('button'); r.type='button'; r.className='row';
+        r.setAttribute('aria-pressed', s.id===state.selected?'true':'false');
+        const c = isC(s);
+        const sub = s.seats ? seatText(s) : `${floorName(s)}${s.alt?' \u00b7 alternative to the complete theater':''}`;
+        const amt = s.seats ? `${seatTotal(s)} seats` : money.format(s.amount);
+        r.innerHTML = `<span class="n num${c?' c':''}">${s.n}</span>
+          <span class="name">${s.name}<small>${sub}</small></span>
+          <span class="amt num${c?' c':''}">${amt}<small>${c?'Committed':'Available'}</small></span>`;
+        r.addEventListener('click',()=>select(s.id));
+        g.appendChild(r);
+      });
+      list.appendChild(g);
+    });
+    if(!list.children.length){ list.innerHTML = '<div class="list-empty">No spaces match this filter.</div>'; }
+  }
+
+  function renderDetail(){
+    const s = byId(state.selected); const d = $('detail');
+    const c = isC(s);
+    const sched = [['Annually', s.amount/5],['Semi-annually', s.amount/10],['Quarterly', s.amount/20]];
+    const changed = Object.keys(state.committed).some(id=>state.committed[id]!==original[id]);
+    let note = '';
+    if(s.seats) note = 'Seat count from the theater seating plan sent Sept 14, 2026. Naming price and giving level to be set by the Advancement office.';
+    else if(s.id==='t-all') note = 'Or name the Stage and the Audience Area separately at $1,000,000 each.';
+    else if(s.alt) note = 'Or name the complete theater, stage and audience together, for $2,000,000.';
+    else if(s.approx) note = 'Marker placed on the closest matching room on the published plan; confirm with the architect\'s drawings.';
+    d.innerHTML = `
+      <div class="zone-label">${s.zone} \u00b7 ${floorName(s)} \u00b7 No. ${s.n}</div>
+      <h2>${s.name}</h2>
+      <div class="amount num">${s.seats ? 'Price to be set' : money.format(s.amount)}</div>
+      <div><span class="status${c?' c':''}"><i class="dot"></i>${c?'Committed':'Available'}</span></div>
+      ${s.seats ? `<div class="sched">
+        <div class="label">${seatText(s)}</div>
+        <div class="seats" aria-hidden="true">${'<i class="seat"></i>'.repeat(s.seats.reg)}${'<i class="seat wc">WC</i>'.repeat(s.seats.wc)}</div>
+      </div>` : `<div class="sched">
+        <div class="label">As a five-year pledge</div>
+        <table class="num">${sched.map(([k,v])=>`<tr><td>${k}</td><td>${money.format(v)}</td></tr>`).join('')}</table>
+      </div>`}
+      ${note?`<p class="note">${note}</p>`:''}
+      <div class="actions">
+        ${(c||s.seats)?'':`<a class="btn" href="${GIVE_URL}" target="_blank" rel="noopener">Give to Imagine Moore</a>`}
+        <button type="button" class="btn secondary" id="toggle">${c?'Mark available (demo)':'Mark committed (demo)'}</button>
+        ${changed?'<button type="button" class="reset" id="reset">Reset to website data</button>':''}
+      </div>`;
+    $('toggle').addEventListener('click',()=>{ state.committed[s.id]=!state.committed[s.id]; renderAll(); });
+    const r = $('reset'); if(r) r.addEventListener('click',()=>{ state.committed={...original}; renderAll(); });
+  }
+
+  function renderAll(){ renderStats(); renderPins(); renderList(); renderDetail(); }
+  function select(id){
+    state.selected=id; const s=byId(id);
+    if(s.floor!==state.floor){ state.floor=s.floor; syncTabs(); }
+    renderPins(); renderList(); renderDetail();
+  }
+  function syncTabs(){ [1,2,'T'].forEach(f=>$('tab-'+f).setAttribute('aria-pressed', state.floor===f?'true':'false')); }
+
+  [1,2,'T'].forEach(f=>$('tab-'+f).addEventListener('click',()=>{ state.floor=f; syncTabs(); renderPins(); }));
+  document.querySelectorAll('.chip').forEach(ch=>ch.addEventListener('click',()=>{
+    state.filter=ch.dataset.filter;
+    document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x===ch?'true':'false'));
+    renderPins(); renderList();
+  }));
+  renderAll();
+})();
+</script>
